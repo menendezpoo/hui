@@ -1,0 +1,38 @@
+{
+  "name": "test-stub-browser-javascript",
+  "version": "1.0.0",
+  "description": "Simple stub for browser JavaScript tests",
+  "main": "index.html",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha -r ts-node/register -r jsdom-global/register test/**/*.spec.ts",
+    "coverage": "nyc mocha -u bdd -r ts-node/register -r jsdom-global/register test/**/*.spec.ts",
+    "build": "tsc --module amd --removeComments true --outFile html/static/js/all.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/menendezpoo/test-stub-browser-javascript.git"
+  },
+  "author": "Jmmp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/menendezpoo/test-stub-browser-javascript/issues"
+  },
+  "homepage": "https://github.com/menendezpoo/test-stub-browser-javascript#readme",
+  "dependencies": {
+    "node-sass": "^4.12.0",
+    "typescript": "^3.5.3"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.0",
+    "@types/mocha": "^5.2.7",
+    "chai": "^4.2.0",
+    "jsdom": "^11.11.0",
+    "jsdom-global": "^3.0.2",
+    "mocha": "^5.2.0",
+    "nyc": "^14.1.1",
+    "ts-node": "^6.2.0"
+  }
+}
