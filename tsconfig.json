@@ -1,17 +1,12 @@
 {
   "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
     "noImplicitAny": true,
-    "removeComments": true,
-    "preserveConstEnums": true,
-    "sourceMap": false,
-    "target": "ES6"
-  },
-  "include": [
-    "src/**/*",
-    "test/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts"
-  ]
+    "module": "commonjs",
+    "target": "es6",
+    "jsx": "react",
+    "strictNullChecks": true,
+    "esModuleInterop": true
+  }
 }

@@ -1,38 +1,48 @@
 {
-  "name": "test-stub-browser-javascript",
+  "name": "typescript-react-stub",
   "version": "1.0.0",
-  "description": "Simple stub for browser JavaScript tests",
-  "main": "index.html",
-  "directories": {
-    "test": "test"
-  },
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "test": "mocha -r ts-node/register -r jsdom-global/register test/**/*.spec.ts",
-    "coverage": "nyc mocha -u bdd -r ts-node/register -r jsdom-global/register test/**/*.spec.ts",
-    "build": "tsc --module amd --removeComments true --outFile html/static/js/all.js"
+    "test": "mocha -r ts-node/register -r ignore-styles test/**/*.spec.tsx",
+    "coverage": "nyc npm run test",
+    "build": "npx webpack"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/menendezpoo/test-stub-browser-javascript.git"
+    "url": "git+https://github.com/menendezpoo/typescript-react-stub.git"
   },
-  "author": "Jmmp",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/menendezpoo/test-stub-browser-javascript/issues"
+    "url": "https://github.com/menendezpoo/typescript-react-stub/issues"
   },
-  "homepage": "https://github.com/menendezpoo/test-stub-browser-javascript#readme",
-  "dependencies": {
-    "node-sass": "^4.12.0",
-    "typescript": "^3.5.3"
-  },
+  "homepage": "https://github.com/menendezpoo/typescript-react-stub#readme",
   "devDependencies": {
-    "@types/chai": "^4.2.0",
+    "@types/chai": "^4.2.7",
+    "@types/jsdom": "^12.2.4",
     "@types/mocha": "^5.2.7",
+    "@types/node": "^13.1.7",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.4",
     "chai": "^4.2.0",
-    "jsdom": "^11.11.0",
-    "jsdom-global": "^3.0.2",
-    "mocha": "^5.2.0",
-    "nyc": "^14.1.1",
-    "ts-node": "^6.2.0"
+    "eslint": "^6.8.0",
+    "ignore-styles": "^5.0.1",
+    "jsdom": "^16.0.0",
+    "mocha": "^7.0.0",
+    "nyc": "^15.0.0",
+    "source-map-loader": "^0.2.4",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.4",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "css-loader": "^3.4.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "style-loader": "^1.1.2",
+    "ts-node": "^8.6.2"
   }
 }
