@@ -1,3 +1,40 @@
-.label{
-    color: red;
+body{
+    font-family: sans-serif;
+}
+
+.hui-panel > div {
+    margin: 50px;
+    /*box-shadow: 0 0 0 3px blue;*/
+}
+
+.hui-icon {
+    background-color: red;
+}
+
+.hui-icon.size-16{
+    width: 16px; height: 16px;
+}
+
+.hui-icon.size-32 {
+    width: 32px; height: 32px;
+}
+
+.hui-label{
+}
+
+.hui-label.with-icon{
+    display: flex;
+    align-items: center;
+}
+
+.hui-label.with-icon .hui-icon{
+    margin-right: 0.3em;
+}
+
+.hui-label .desc{
+    opacity: 50%;
+}
+
+.hui-icon {
+    background-color: red;
 }
