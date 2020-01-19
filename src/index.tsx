@@ -9,6 +9,7 @@ ReactDOM.render(
         <Label text="Hello World" description="With Hello Description"/>
         <Label text="Hello World 16" icon="hello"/>
         <Label text="Hello World 16" description="With Hello Description" icon="hello"/>
+        <Label text="Hello World 32" icon="hello" iconSize={32}/>
         <Label text="Hello World 32" description="With Hello Description" icon="hello" iconSize={32}/>
     </Panel>,
     document.getElementById('root')

@@ -1,7 +1,6 @@
 import * as React from "react";
-// TODO: Here I am
 
-export type IconSize = 16 | 32;
+export type IconSize = 8 | 16 | 32;
 
 export interface IconProps{
     name: string;

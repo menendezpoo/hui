@@ -8,7 +8,13 @@ body{
 }
 
 .hui-icon {
-    background-color: red;
+    /*background-color: red;*/
+    background: url('../icons/0180-file-empty.svg') center center no-repeat;
+    background-size: 100% 100%;
+}
+
+.hui-icon.size-8{
+    width: 8px; height: 8px;
 }
 
 .hui-icon.size-16{
@@ -33,8 +39,4 @@ body{
 
 .hui-label .desc{
     opacity: 50%;
-}
-
-.hui-icon {
-    background-color: red;
 }
