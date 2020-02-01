@@ -1,28 +1,31 @@
 import * as React from "react";
-import '../css/styles.css';
-import {Icon, IconSize} from "./Icon";
+import {Icon, IconName, IconSize} from "./Icon";
 
 export interface LabelProps {
-    text: string;
-    icon?: string;
+    text?: string;
+    icon?: IconName;
     iconSize?: IconSize;
     description?: string;
 }
 
 export const Label = (props: LabelProps) => {
 
-    if(!props.icon && !props.description) {
-        return <div className="hui-label">{props.text}</div>;
+    if(props.icon && !props.text) {
+        return <div className={"ui-label"}>
+            <Icon name={props.icon} size={props.iconSize}/>
+        </div>
+    }else if(!props.icon && !props.description) {
+        return <div className="ui-label">{props.text}</div>;
 
     }else if(!props.icon && props.description) {
-        return <div className="hui-label">
+        return <div className="ui-label">
             <div className="text">{props.text}</div>
             <div className="desc">{props.description}</div>
         </div>;
 
     }else if(props.icon){
         if(props.description) {
-            return <div className="hui-label with-icon">
+            return <div className="ui-label with-icon">
                 <Icon name={props.icon} size={props.iconSize} />
                 <div className="text-side">
                     <div className="text">{props.text}</div>
@@ -30,7 +33,7 @@ export const Label = (props: LabelProps) => {
                 </div>
             </div>
         }else{
-            return <div className="hui-label with-icon">
+            return <div className="ui-label with-icon">
                 <Icon name={props.icon} size={props.iconSize} />
                 <div className="text">{props.text}</div>
             </div>
@@ -38,6 +41,4 @@ export const Label = (props: LabelProps) => {
     }else{
         throw "Undesired state";
     }
-
-
 };

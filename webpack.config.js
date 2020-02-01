@@ -20,24 +20,43 @@ module.exports = {
                     }
                 ]
             },
+
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             {
                 enforce: "pre",
                 test: /\.js$/,
                 loader: "source-map-loader"
             },
-            {
-                test: /\.css$/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                ]
-            },
+
+            // CSS to style-loader
+            // {
+            //     test: /\.css$/,
+            //     use: [
+            //         'style-loader',
+            //         'css-loader',
+            //     ]
+            // },
+
+            // All images to imgs/ folder
             {
                 test: /\.(png|svg|jpg|gif)$/,
+                loader: 'file-loader',
+                options: {
+                    outputPath: 'imgs'
+                }
+            },
+
+            // CSS & SASS
+            {
+                test: /\.s?[ac]ss$/i,
                 use: [
-                    'file-loader'
-                ]
+                    // Creates `style` nodes from JS strings
+                    'style-loader',
+                    // Translates CSS into CommonJS
+                    'css-loader',
+                    // Compiles Sass to CSS
+                    'sass-loader',
+                ],
             }
 
         ]

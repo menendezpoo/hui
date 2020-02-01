@@ -1,0 +1,14 @@
+.ui-button-wrap{
+  display: inline-flex;
+  align-items: center;
+}
+
+.ui-button{
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6em;
+
+  >.ui-icon.size-8{
+    margin-left: 0.6em;
+  }
+}

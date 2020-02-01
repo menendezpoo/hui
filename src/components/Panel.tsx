@@ -7,5 +7,5 @@ export interface PanelProps {
 }
 
 export const Panel: FunctionComponent<PanelProps> = (props: PanelProps) => {
-    return <div className="hui-panel">{props.children}</div>
+    return <div className="ui-panel">{props.children}</div>
 };

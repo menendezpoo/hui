@@ -1,0 +1,8 @@
+.ui-clickable{
+  cursor: pointer;
+
+  &:hover{
+    background-color: Highlight;
+    color: HighlightText;
+  }
+}
