@@ -9,5 +9,5 @@ export interface IconProps{
 }
 
 export const Icon = (props: IconProps) => {
-    return <div className={`ui-icon size-${props.size || 16} icon-${props.name}`} />
+    return <div className={`ui-icon size-${props.size || 16} icon-${props.name}`} />;
 };

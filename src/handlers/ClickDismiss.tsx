@@ -1,23 +1,21 @@
-/**
- * Keeps a stack for globally reacting to keys, like Escape and Enter.
- */
 import {Callable} from "../declarations";
 
-export class
-FocusStackHandler{
+export class ClickDismiss{
+
+    static mouseup = new ClickDismiss('mouseup');
 
     private static idReminder = 1;
 
-    static dismiss = new FocusStackHandler('Escape');
-
-    static commit = new FocusStackHandler('Enter');
-
     private stack: {id: number, call: Callable}[] = [];
 
-    private constructor(key: string){
+    private preventNext = false;
 
-        window.addEventListener('keydown', e => {
-            if(e.key === key) {
+    private constructor(eventName: string){
+        window.addEventListener(eventName, e => {
+            if(this.preventNext) {
+                this.preventNext = false;
+                return;
+            }else{
                 if(this.stack.length > 0) {
                     e.stopImmediatePropagation();
                     this.popAndExecute();
@@ -32,7 +30,7 @@ FocusStackHandler{
 
     register(call: Callable): number{
 
-        const id = FocusStackHandler.idReminder++;
+        const id = ClickDismiss.idReminder++;
 
         this.stack.push({id, call});
 
@@ -49,8 +47,13 @@ FocusStackHandler{
         }
     }
 
+    preventNextEvent(){
+        this.preventNext = true;
+    }
+
     unregister(id: number){
         this.stack = this.stack.filter(m => m.id != id);
+        this.preventNext = false;
     }
 
 }

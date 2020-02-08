@@ -1,16 +1,9 @@
-/**
- * Keeps a stack for globally reacting to keys, like Escape and Enter.
- */
 import {Callable} from "../declarations";
 
-export class
-FocusStackHandler{
-
+export class PrevNextKeyStackHandler{
     private static idReminder = 1;
 
-    static dismiss = new FocusStackHandler('Escape');
-
-    static commit = new FocusStackHandler('Enter');
+    static instance = new PrevNextKeyStackHandler();
 
     private stack: {id: number, call: Callable}[] = [];
 
@@ -52,5 +45,4 @@ FocusStackHandler{
     unregister(id: number){
         this.stack = this.stack.filter(m => m.id != id);
     }
-
 }

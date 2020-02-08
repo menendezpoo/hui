@@ -1,0 +1,22 @@
+.ui-clickable.is-open{
+    background-color: Highlight;
+    color: HighlightText;
+}
+
+.ui-button:hover,
+.ui-button.is-open{
+    background-color: Highlight;
+    color: HighlightText;
+}
+
+.ui-menuitem.is-open,
+.ui-menuitem:hover {
+    background-color: Highlight;
+    color: HighlightText;
+}
+
+.ui-menu-overlay {
+    background-color: Window;
+    color: WindowText;
+    border: solid 1px #ddd;
+}
