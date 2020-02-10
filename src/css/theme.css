@@ -10,6 +10,7 @@
 }
 
 .ui-menuitem.is-open,
+.ui-menuitem.is-selected,
 .ui-menuitem:hover {
     background-color: Highlight;
     color: HighlightText;

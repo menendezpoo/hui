@@ -20,7 +20,7 @@ ReactDOM.render(
                 <MenuItem text={`This as well`}>
                     <MenuItem text={`Well well well`}/>
                     <MenuItem text={`Little Maui is having trouble`}/>
-                    <MenuItem text={`With his hook.`}/>
+                    <MenuItem text={`With his hook.`} onActivate={() => console.log(`Hook!`)}/>
                 </MenuItem>
                 <MenuItem text={`Here comes more`}>
                     <MenuItem text={`Well well well`}/>

@@ -86,6 +86,7 @@ export class Button extends React.Component<ButtonProps, ButtonState>{
 
         // Register for hiding when body is clicked
         this.clickDismissId = ClickDismiss.mouseup.register(() => this.hideDropDown());
+
     }
 
     render(){
