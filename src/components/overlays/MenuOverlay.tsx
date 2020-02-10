@@ -122,19 +122,19 @@ export class MenuOverlay extends React.Component<MenuOverlayProps, MenuOverlaySt
         const rect = Rectangle.fromDOMRect(this.overlayRef.current.getBoundingClientRect());
         const view = {width: window.innerWidth, height: window.innerHeight};
         const refRect = this.props.refRect;
-        let newr = rect.clone();
+        let newRectangle = rect.clone();
 
         if(rect.right > view.width) {
-            newr = newr.withRight(refRect.left);
+            newRectangle = newRectangle.withRight(refRect.left);
         }
 
         if(rect.bottom > view.height) {
-            newr = newr.withBottom(view.height);
+            newRectangle = newRectangle.withBottom(view.height);
         }
 
-        if(!newr.equals(rect)) {
-            this.overlayRef.current.style.left = newr.left + 'px';
-            this.overlayRef.current.style.top  = newr.top  + 'px';
+        if(!newRectangle.equals(rect)) {
+            this.overlayRef.current.style.left = newRectangle.left + 'px';
+            this.overlayRef.current.style.top  = newRectangle.top  + 'px';
         }
     }
 
@@ -144,6 +144,10 @@ export class MenuOverlay extends React.Component<MenuOverlayProps, MenuOverlaySt
 
     setOpenItem(index: number){
         this.setState({selectedIndex: index, openIndex: index});
+    }
+
+    setSelectedItem(index: number){
+        this.setState({selectedIndex: index});
     }
 
     render(){
@@ -175,6 +179,7 @@ export class MenuOverlay extends React.Component<MenuOverlayProps, MenuOverlaySt
                     onClose: () => this.setNoOpenItem(),
                     onDismissSignal: () => this.sendDismissSignal(),
                     onDismissSingleSignal: () => this.closeOpenedIndex(),
+                    onSelectSignal: () => this.setSelectedItem(index),
                     isSelected: index === this.state.selectedIndex,
                     isOpen: index === this.state.openIndex,
                     isActivated: index === this.state.activatedIndex,

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 export type IconSize = 8 | 16 | 32;
-export type IconName = "close" | "floppy" | "file" | "folder" | "chevron-up" | "chevron-down" | "chevron-left" | "chevron-right";
+export type IconName = "empty" | "close" | "floppy" | "file" | "folder" | "chevron-up" | "chevron-down" | "chevron-left" | "chevron-right";
 
 export interface IconProps{
     name: IconName;

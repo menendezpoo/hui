@@ -17,6 +17,7 @@ export interface MenuItemProps  extends LabelProps{
     onActivate?: Callable;
     onDismissSignal?: Callable;
     onDismissSingleSignal?: Callable;
+    onSelectSignal?: Callable;
     parent?: MenuOverlay;
 }
 
@@ -35,6 +36,7 @@ export class MenuItem extends React.Component<MenuItemProps, MenuItemState>{
         this.mouseActivate = this.mouseActivate.bind(this);
         this.sendDismissSignal = this.sendDismissSignal.bind(this);
         this.sendDismissSingleSignal = this.sendDismissSingleSignal.bind(this);
+        this.sendSelectSignal = this.sendSelectSignal.bind(this);
     }
 
     mouseActivate(e: React.MouseEvent<HTMLDivElement, MouseEvent>){
@@ -78,6 +80,7 @@ export class MenuItem extends React.Component<MenuItemProps, MenuItemState>{
     render(){
 
         const selectedClass = this.props.isSelected ? 'is-selected' : '';
+        const propsWithIcon = Object.assign({icon: "empty"}, this.props);
 
         if(this.props.isActivated === true) {
             setTimeout(() => this.activate());
@@ -90,7 +93,7 @@ export class MenuItem extends React.Component<MenuItemProps, MenuItemState>{
             if(this.props.isOpen) {
                 return (
                     <div ref={this.ref} className={`ui-menuitem is-selected is-open`} onMouseDown={this.hideOverlay}>
-                        <Label {...this.props} />
+                        <Label {...propsWithIcon} />
                         <Icon name={`chevron-right`} size={8} />
                         <MenuOverlay
                             left={rect.right} top={rect.top} refRect={rect} parentMenuItem={this}
@@ -102,16 +105,22 @@ export class MenuItem extends React.Component<MenuItemProps, MenuItemState>{
                 )
             }else{
                 return (
-                    <div ref={this.ref} className={`ui-menuitem ${selectedClass}`} onMouseDown={this.showOverlay}>
-                        <Label {...this.props} />
+                    <div ref={this.ref}
+                         className={`ui-menuitem ${selectedClass}`}
+                         onMouseEnter={this.sendSelectSignal}
+                         onMouseDown={this.showOverlay}>
+                        <Label {...propsWithIcon} />
                         <Icon name={`chevron-right`} size={8} />
                     </div>
                 )
             }
         }else{
             return (
-                <div ref={this.ref} className={`ui-menuitem ${selectedClass}`} onMouseDown={this.mouseActivate}>
-                    <Label {...this.props} />
+                <div ref={this.ref}
+                     className={`ui-menuitem ${selectedClass}`}
+                     onMouseEnter={this.sendSelectSignal}
+                     onMouseDown={this.mouseActivate}>
+                    <Label {...propsWithIcon} />
                 </div>
             )
         }
@@ -126,6 +135,12 @@ export class MenuItem extends React.Component<MenuItemProps, MenuItemState>{
     sendDismissSingleSignal(){
         if(this.props.onDismissSingleSignal) {
             this.props.onDismissSingleSignal();
+        }
+    }
+
+    sendSelectSignal(){
+        if(this.props.onSelectSignal) {
+            this.props.onSelectSignal();
         }
     }
 }
