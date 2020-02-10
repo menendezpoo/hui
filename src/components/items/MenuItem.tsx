@@ -82,7 +82,7 @@ export class MenuItem extends React.Component<MenuItemProps, MenuItemState>{
         const selectedClass = this.props.isSelected ? 'is-selected' : '';
         const propsWithIcon = Object.assign({icon: "empty"}, this.props);
 
-        if(this.props.isActivated === true) {
+        if(this.props.isActivated === true && React.Children.count(this.props.children) === 0) {
             setTimeout(() => this.activate());
         }
 

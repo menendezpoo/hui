@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import {ClickableProps} from "./Clickable";
 import {Label} from "./Label";
 import {Icon} from "./Icon";
@@ -9,11 +8,11 @@ import {FocusStackHandler} from "../../handlers/FocusStackHandler";
 import {ClickDismiss} from "../../handlers/ClickDismiss";
 import {Rectangle} from "../../helpers/Rectangle";
 import {Callable} from "../../declarations";
-import {Simulate} from "react-dom/test-utils";
 
 export interface ButtonProps extends ClickableProps{
     children?: React.ReactNode;
     onClick?: Callable;
+    split?: boolean;
 }
 
 export interface ButtonState {
@@ -90,10 +89,58 @@ export class Button extends React.Component<ButtonProps, ButtonState>{
     }
 
     render(){
-
+        const rect = Rectangle.fromDOMRect(this.buttonRef.current?.getBoundingClientRect() || new DOMRect());
+        const chevron = () => <Icon name={"chevron-down"} size={8}/>;
+        const label = () => <Label {...this.props} />;
+        const menu = () => (
+            <MenuOverlay
+                top={rect.top + rect.height}
+                left={rect.left}
+                refRect={rect}
+                onDismissSignal={this.hideDropDown}>
+                {this.props.children}
+            </MenuOverlay>
+        );
         if(this.props.children) {
-            if(this.state.dropDownVisible) {
-                const rect = Rectangle.fromDOMRect(this.buttonRef.current?.getBoundingClientRect() || new DOMRect());
+            if(this.props.split) {
+                if(this.state.dropDownVisible) {
+                    return (
+                        <div className={`ui-button-wrap split`}>
+                            <div tabIndex={0}
+                                 ref={this.buttonRef}
+                                 className={"ui-clickable ui-button is-open"}
+                                 onClick={this.activate}>
+                                {label()}
+                            </div>
+                            <div tabIndex={0}
+                                 className={`ui-clickable ui-button split-part`}
+                                 onClick={this.showDropDown}
+                                 onKeyDown={this.keyDownShow}>
+                                {chevron()}
+                                {menu()}
+                            </div>
+                        </div>
+                    )
+                }else{
+                    return (
+                        <div className={`ui-button-wrap split`}>
+                            <div tabIndex={0}
+                                 ref={this.buttonRef}
+                                 className={"ui-clickable ui-button"}
+                                 onClick={this.activate}>
+                                {label()}
+                            </div>
+                            <div tabIndex={0}
+                                 className={`ui-clickable ui-button split-part`}
+                                 onClick={this.showDropDown}
+                                 onKeyDown={this.keyDownShow}>
+                                {chevron()}
+                            </div>
+                        </div>
+                    )
+                }
+
+            }else if(this.state.dropDownVisible) {
                 return (
                     <div className={`ui-button-wrap`}>
                         <div tabIndex={0}
@@ -101,27 +148,23 @@ export class Button extends React.Component<ButtonProps, ButtonState>{
                              className={"ui-clickable ui-button is-open"}
                              onKeyDown={this.keyDownHide}
                              onClick={this.showDropDown}>
-                            <Label {...this.props} />
-                            <Icon name={"chevron-down"} size={8}/>
+                            {label()}
+                            {chevron()}
                         </div>
-                        <MenuOverlay
-                            top={rect.top + rect.height}
-                            left={rect.left}
-                            refRect={rect}
-                            onDismissSignal={this.hideDropDown}>
-                            {this.props.children}
-                        </MenuOverlay>
+                        {menu()}
                     </div>
                 )
             }else{
                 return (
-                    <div tabIndex={0}
-                         ref={this.buttonRef}
-                         className={"ui-clickable ui-button"}
-                         onClick={this.showDropDown}
-                         onKeyDown={this.keyDownShow}>
-                        <Label {...this.props} />
-                        <Icon name={"chevron-down"} size={8}/>
+                    <div className={`ui-button-wrap`}>
+                        <div tabIndex={0}
+                             ref={this.buttonRef}
+                             className={"ui-clickable ui-button"}
+                             onClick={this.showDropDown}
+                             onKeyDown={this.keyDownShow}>
+                            {label()}
+                            {chevron()}
+                        </div>
                     </div>
                 )
             }
@@ -132,7 +175,7 @@ export class Button extends React.Component<ButtonProps, ButtonState>{
                      className={"ui-clickable ui-button"}
                      onClick={this.activate}
                      onKeyDown={this.keyDownActivate}>
-                    <Label {...this.props} />
+                    {label()}
                 </div>
             )
         }

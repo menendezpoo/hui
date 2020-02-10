@@ -81,7 +81,7 @@ export class MenuOverlay extends React.Component<MenuOverlayProps, MenuOverlaySt
         let next = current + 1;
 
         if("undefined" !== typeof this.childCount && next >= this.childCount) {
-            next = this.childCount - 1;
+            next = 0;
         }
 
         this.setState({selectedIndex: next});

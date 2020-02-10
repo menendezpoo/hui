@@ -11,7 +11,10 @@ import {MenuItem} from "./components/items/MenuItem";
 
 ReactDOM.render(
     <Panel>
-
+        <Button icon={"file"} iconSize={16} text={`I have split items`} split={true}>
+            <MenuItem text={`Hello`}/>
+            <MenuItem text={`World`} icon={`floppy`}/>
+        </Button>
         <Button icon={"file"} iconSize={16} text={`I have items`}>
             <MenuItem text={`Hello`}/>
             <MenuItem text={`World`} icon={`floppy`}/>
