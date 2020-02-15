@@ -13,6 +13,8 @@ export interface ButtonProps extends ClickableProps{
     children?: React.ReactNode;
     onClick?: Callable;
     split?: boolean;
+    face?: "hover" | "always" | "never";
+    classTag?: string;
 }
 
 export interface ButtonState {
@@ -101,11 +103,12 @@ export class Button extends React.Component<ButtonProps, ButtonState>{
                 {this.props.children}
             </MenuOverlay>
         );
+        const tags = `face-${this.props.face || 'hover'} ${this.props.classTag}`;
         if(this.props.children) {
             if(this.props.split) {
                 if(this.state.dropDownVisible) {
                     return (
-                        <div className={`ui-button-wrap split`}>
+                        <div className={`ui-button-wrap split ${tags}`}>
                             <div tabIndex={0}
                                  ref={this.buttonRef}
                                  className={"ui-clickable ui-button is-open"}
@@ -123,7 +126,7 @@ export class Button extends React.Component<ButtonProps, ButtonState>{
                     )
                 }else{
                     return (
-                        <div className={`ui-button-wrap split`}>
+                        <div className={`ui-button-wrap split ${tags}`}>
                             <div tabIndex={0}
                                  ref={this.buttonRef}
                                  className={"ui-clickable ui-button"}
@@ -145,7 +148,7 @@ export class Button extends React.Component<ButtonProps, ButtonState>{
                     <div className={`ui-button-wrap`}>
                         <div tabIndex={0}
                              ref={this.buttonRef}
-                             className={"ui-clickable ui-button is-open"}
+                             className={`ui-clickable ui-button is-open ${tags}`}
                              onKeyDown={this.keyDownHide}
                              onClick={this.showDropDown}>
                             {label()}
@@ -159,7 +162,7 @@ export class Button extends React.Component<ButtonProps, ButtonState>{
                     <div className={`ui-button-wrap`}>
                         <div tabIndex={0}
                              ref={this.buttonRef}
-                             className={"ui-clickable ui-button"}
+                             className={`ui-clickable ui-button ${tags}`}
                              onClick={this.showDropDown}
                              onKeyDown={this.keyDownShow}>
                             {label()}
@@ -172,7 +175,7 @@ export class Button extends React.Component<ButtonProps, ButtonState>{
             return (
                 <div tabIndex={0}
                      ref={this.buttonRef}
-                     className={"ui-clickable ui-button"}
+                     className={`ui-clickable ui-button ${tags}`}
                      onClick={this.activate}
                      onKeyDown={this.keyDownActivate}>
                     {label()}

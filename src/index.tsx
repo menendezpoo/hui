@@ -8,9 +8,11 @@ import {Button} from "./components/items/Button";
 import {Clickable} from "./components/items/Clickable";
 import {Label} from "./components/items/Label";
 import {MenuItem} from "./components/items/MenuItem";
+import {TextBox} from "./components/items/TextBox";
 
 ReactDOM.render(
     <Panel>
+        <TextBox placeholder={`A text box`} clearButton={true} change={t => console.log(`value: ${t}`)} />
         <Button icon={"file"} iconSize={16} text={`I have split items`} split={true}>
             <MenuItem text={`Hello`}/>
             <MenuItem text={`World`} icon={`floppy`}/>

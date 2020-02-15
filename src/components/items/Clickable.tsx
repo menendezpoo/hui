@@ -5,7 +5,9 @@ export interface ClickableProps extends LabelProps{
 }
 
 export const Clickable = (props: ClickableProps) => {
-    return <div className={"ui-clickable"}>
-        <Label {...props} />
-    </div>;
+    return (
+        <div className={"ui-clickable"}>
+            <Label {...props} />
+        </div>
+    );
 };

@@ -1,5 +1,11 @@
 # typescript-react-stub
 
+**TODOs**
+
+[ ] Textbox - hide clear button when not visible
+[ ] Textbox - outline div wrapper border when textbox focused 
+[ ] Separators (Menus and Panel)
+
 https://www.typescriptlang.org/docs/handbook/react-&-webpack.html
 
 ```bash

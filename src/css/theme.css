@@ -5,7 +5,7 @@
 
 .ui-button-wrap.split:hover > .ui-button-split-part,
 .ui-button-wrap.split:hover > .ui-button,
-.ui-button:hover,
+.ui-button:hover:not(.face-never),
 .ui-button.is-open{
     background-color: Highlight;
     color: HighlightText;
