@@ -15,10 +15,10 @@ export interface ButtonProps extends ClickableProps{
     split?: boolean;
     face?: "hover" | "always" | "never";
     classTag?: string;
+    disabled?: boolean;
 }
 
 export interface ButtonState {
-    isDisabled?: boolean;
     dropDownVisible?: boolean;
 }
 
@@ -42,14 +42,14 @@ export class Button extends React.Component<ButtonProps, ButtonState>{
     }
 
     activate(){
-        if(this.state.isDisabled !== true && this.props.onClick) {
+        if(this.props.disabled !== true && this.props.onClick) {
             this.props.onClick();
         }
     }
 
     keyPass(e: KeyboardEvent<HTMLDivElement>, call: Callable){
         if(e.key === 'Enter' || e.key === ' ') {
-            if(this.state.isDisabled !== true) {
+            if(!this.props.disabled) {
                 e.stopPropagation();
                 e.preventDefault();
                 call();
@@ -62,6 +62,9 @@ export class Button extends React.Component<ButtonProps, ButtonState>{
     }
 
     keyDownShow(e: KeyboardEvent<HTMLDivElement>){
+        if(this.props.disabled) {
+            return;
+        }
         this.keyPass(e, () => this.showDropDown());
     }
 
@@ -87,7 +90,6 @@ export class Button extends React.Component<ButtonProps, ButtonState>{
 
         // Register for hiding when body is clicked
         this.clickDismissId = ClickDismiss.mouseup.register(() => this.hideDropDown());
-
     }
 
     render(){
@@ -103,19 +105,29 @@ export class Button extends React.Component<ButtonProps, ButtonState>{
                 {this.props.children}
             </MenuOverlay>
         );
-        const tags = `face-${this.props.face || 'hover'} ${this.props.classTag}`;
+
+        const tags = [
+                `face-${this.props.face || 'hover'}`,
+                 this.props.classTag,
+                 this.props.disabled ? 'disabled' : null
+            ]
+            .filter(a => !!a)
+            .join(` `);
+
+        const tabProp = this.props.disabled ? {} : {tabIndex: 0};
+
         if(this.props.children) {
             if(this.props.split) {
                 if(this.state.dropDownVisible) {
                     return (
-                        <div className={`ui-button-wrap split ${tags}`}>
-                            <div tabIndex={0}
+                        <div className={`ui-button-wrap split `}>
+                            <div {...tabProp}
                                  ref={this.buttonRef}
-                                 className={"ui-clickable ui-button is-open"}
+                                 className={`ui-clickable ui-button is-open ${tags}`}
                                  onClick={this.activate}>
                                 {label()}
                             </div>
-                            <div tabIndex={0}
+                            <div {...tabProp}
                                  className={`ui-clickable ui-button split-part`}
                                  onClick={this.showDropDown}
                                  onKeyDown={this.keyDownShow}>
@@ -127,13 +139,13 @@ export class Button extends React.Component<ButtonProps, ButtonState>{
                 }else{
                     return (
                         <div className={`ui-button-wrap split ${tags}`}>
-                            <div tabIndex={0}
+                            <div {...tabProp}
                                  ref={this.buttonRef}
                                  className={"ui-clickable ui-button"}
                                  onClick={this.activate}>
                                 {label()}
                             </div>
-                            <div tabIndex={0}
+                            <div {...tabProp}
                                  className={`ui-clickable ui-button split-part`}
                                  onClick={this.showDropDown}
                                  onKeyDown={this.keyDownShow}>
@@ -146,7 +158,7 @@ export class Button extends React.Component<ButtonProps, ButtonState>{
             }else if(this.state.dropDownVisible) {
                 return (
                     <div className={`ui-button-wrap`}>
-                        <div tabIndex={0}
+                        <div {...tabProp}
                              ref={this.buttonRef}
                              className={`ui-clickable ui-button is-open ${tags}`}
                              onKeyDown={this.keyDownHide}
@@ -160,7 +172,7 @@ export class Button extends React.Component<ButtonProps, ButtonState>{
             }else{
                 return (
                     <div className={`ui-button-wrap`}>
-                        <div tabIndex={0}
+                        <div {...tabProp}
                              ref={this.buttonRef}
                              className={`ui-clickable ui-button ${tags}`}
                              onClick={this.showDropDown}
@@ -173,7 +185,7 @@ export class Button extends React.Component<ButtonProps, ButtonState>{
             }
         }else{
             return (
-                <div tabIndex={0}
+                <div {...tabProp}
                      ref={this.buttonRef}
                      className={`ui-clickable ui-button ${tags}`}
                      onClick={this.activate}
