@@ -142,6 +142,7 @@ export class Button extends React.Component<ButtonProps, ButtonState>{
                             <div {...tabProp}
                                  ref={this.buttonRef}
                                  className={"ui-clickable ui-button"}
+                                 onKeyDown={this.keyDownActivate}
                                  onClick={this.activate}>
                                 {label()}
                             </div>

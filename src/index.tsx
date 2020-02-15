@@ -14,7 +14,7 @@ ReactDOM.render(
     <Panel>
         <TextBox placeholder={`Box with clearButton`} clearButton={true} change={t => console.log(`value: ${t}`)} />
         <TextBox placeholder={`A text box`} change={t => console.log(`value: ${t}`)} />
-        <Button icon={"file"} iconSize={16} text={`I have split items`} split={true}>
+        <Button icon={"file"} iconSize={16} text={`I have split items`} split={true} onClick={() =>alert("Click on the button side!")}>
             <MenuItem text={`Hello`}/>
             <MenuItem text={`World`} icon={`floppy`}/>
         </Button>
@@ -63,7 +63,7 @@ ReactDOM.render(
             <MenuItem text={`Here I am`}/>
         </Button>
         <Button icon={"file"} iconSize={32}/>
-        <Button text={`Im just a button`}/>
+        <Button text={`Im just a button`} onClick={() => alert('Clickity')}/>
         <Clickable icon={"floppy"}/>
         <Clickable text={"Click me"} description={"Right here"}/>
         <Clickable text={"Click me"} description={"Right here"} icon={"floppy"} iconSize={32}/>
