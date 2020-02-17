@@ -9,18 +9,23 @@ import {Clickable} from "./components/items/Clickable";
 import {Label} from "./components/items/Label";
 import {MenuItem} from "./components/items/MenuItem";
 import {TextBox} from "./components/items/TextBox";
+import {Separator} from "./components/items/Separator";
 
 ReactDOM.render(
     <Panel>
         <TextBox placeholder={`Box with clearButton`} clearButton={true} change={t => console.log(`value: ${t}`)} />
         <TextBox placeholder={`A text box`} change={t => console.log(`value: ${t}`)} />
+        <Separator/>
         <Button icon={"file"} iconSize={16} text={`I have split items`} split={true} onClick={() =>alert("Click on the button side!")}>
             <MenuItem text={`Hello`}/>
             <MenuItem text={`World`} icon={`floppy`}/>
+            <Separator/>
+            <MenuItem text={`It's me`}/>
         </Button>
         <Button icon={"file"} iconSize={16} text={`I have items`}>
             <MenuItem text={`Hello`}/>
             <MenuItem text={`World`} icon={`floppy`}/>
+            <Separator/>
             <MenuItem text={`Here I am`}>
                 <MenuItem text={`This is a sub Item`} onActivate={() => console.log(`Activated!`)}/>
                 <MenuItem text={`This as well`}>

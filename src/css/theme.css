@@ -22,3 +22,6 @@
     color: WindowText;
     border: solid 1px #ddd;
 }
+.ui-separator:after{
+    background-color: WindowFrame;
+}

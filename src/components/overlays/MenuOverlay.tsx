@@ -5,6 +5,8 @@ import {RefObject} from "react";
 import {Rectangle} from "../../helpers/Rectangle";
 import {Callable} from "../../declarations";
 import {KeyCaptureStackHandler} from "../../handlers/KeyCaptureStackHandler";
+import {instanceOf} from "prop-types";
+import {Separator} from "../items/Separator";
 
 export interface MenuOverlayProps extends OverlayProps{
     refRect: Rectangle;
@@ -25,6 +27,7 @@ export class MenuOverlay extends React.Component<MenuOverlayProps, MenuOverlaySt
 
     readonly keyCaptureId: number;
     private childCount: number | undefined;
+    private separators: number[] = [];
 
     constructor(props: MenuOverlayProps){
         super(props);
@@ -80,6 +83,10 @@ export class MenuOverlay extends React.Component<MenuOverlayProps, MenuOverlaySt
 
         let next = current + 1;
 
+        while("undefined" !== typeof this.separators.find(i => i === next)) {
+            next++;
+        }
+
         if("undefined" !== typeof this.childCount && next >= this.childCount) {
             next = 0;
         }
@@ -96,6 +103,10 @@ export class MenuOverlay extends React.Component<MenuOverlayProps, MenuOverlaySt
         }
 
         let prev = current - 1;
+
+        while("undefined" !== typeof this.separators.find(i => i === prev)) {
+            prev--;
+        }
 
         if(prev < 0) {
             if("undefined" !== typeof this.childCount) {
@@ -172,8 +183,13 @@ export class MenuOverlay extends React.Component<MenuOverlayProps, MenuOverlaySt
 
         this.childCount = React.Children.count(this.props.children);
 
+        this.separators = []; // Reset to collect on .map bellow
+
         return <div ref={this.overlayRef} className={`ui-overlay ui-menu-overlay`} style={st}>
             {React.Children.map(this.props.children, (menuItem: React.ReactElement<MenuItemProps>, index) => {
+                if(menuItem.type === Separator) {
+                    this.separators.push(index);
+                }
                 return React.cloneElement(menuItem, {
                     onOpen: () => this.setOpenItem(index),
                     onClose: () => this.setNoOpenItem(),
