@@ -11,9 +11,24 @@ import {MenuItem} from "./components/items/MenuItem";
 import {TextBox} from "./components/items/TextBox";
 import {Separator} from "./components/items/Separator";
 
+async function  withLatency<T>(r: T){
+    return new Promise<T>(resolve => setTimeout(()=>resolve(r), 2000*Math.random()));
+}
+
 ReactDOM.render(
     <Panel>
-        <TextBox placeholder={`Box with clearButton`} clearButton={true} change={t => console.log(`value: ${t}`)} />
+        <TextBox placeholder={`I have suggestions`} clearButton={true} suggestions={async t => {
+            console.log(`searching ${t}`);
+            return withLatency([
+                {key:`a`, text: `${t} - Hello World`, description: `This is a description of the item`},
+                {key:`b`, text: `${t} - Here I am`, description: `This is a description of the item`},
+                {key:`c`, text: `${t} - This is me`, description: `This is a description of the item`},
+                {key:`d`, separator: true},
+                {key:`e`, text: `${t} - I came to this world`, description: `This is a description of the item`},
+                {key:`f`, text: `${t} - So wild and free`, description: `This is a description of the item`},
+            ]);
+        }} />
+        <TextBox placeholder={`I have ClearButton`} clearButton={true} change={t => console.log(`value: ${t}`)} />
         <TextBox placeholder={`A text box`} change={t => console.log(`value: ${t}`)} />
         <Separator/>
         <Button icon={"file"} iconSize={16} text={`I have split items`} split={true} onClick={() =>alert("Click on the button side!")}>
