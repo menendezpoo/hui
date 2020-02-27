@@ -8,9 +8,12 @@ import {Loader} from "./Loader";
 import {LabelProps} from "./Label";
 import {Callable} from "../../declarations";
 import {Clickable} from "./Clickable";
+import {instanceOf} from "prop-types";
+
+export type SuggestionLoader = (text: string) => Promise<Suggestion[]>;
 
 export interface SuggestionsOptions {
-    getSuggestions: (text: string) => Promise<Suggestion[]>;
+    getSuggestions: SuggestionLoader;
     showLoader?: boolean;
     charsToTrigger?: number;
 }
@@ -26,12 +29,13 @@ export interface TextBoxProps {
     clearButton?: boolean | 'always';
     change?: (text: string) => void;
     placeholder?: string;
-    suggestions?: (text: string) => Promise<Suggestion[]> | SuggestionsOptions;
+    suggestions?: SuggestionLoader | SuggestionsOptions;
+    onSuggestionSelected?: (suggestion: Suggestion) => void;
 }
 
 interface TextBoxState{
     value: string;
-    focused: boolean;
+    focused?: boolean;
     suggestions?: Suggestion[];
     loadingSuggestions?: boolean;
     selectedSuggestion?: number;
@@ -56,6 +60,18 @@ export class TextBox extends React.Component<TextBoxProps, TextBoxState>{
         this.clear = this.clear.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
+    }
+
+    activateSuggestion(sug: Suggestion){
+
+        this.setState({
+            value: sug.text || '',
+            suggestions: undefined
+        });
+
+        if(this.props.onSuggestionSelected) {
+            this.props.onSuggestionSelected(sug);
+        }
     }
 
     clear(){
@@ -102,6 +118,13 @@ export class TextBox extends React.Component<TextBoxProps, TextBoxState>{
         }else if(e.key === 'ArrowDown') {
             this.selectNextSuggestion()
 
+        }else if(e.key === 'Escape') {
+            this.setState({suggestions: undefined});
+
+        }else if(e.key === 'Enter'){
+            if(typeof this.state.selectedSuggestion === 'number' && this.state.suggestions) {
+                this.activateSuggestion(this.state.suggestions[this.state.selectedSuggestion]);
+            }
         }else{
             stop = false;
         }
@@ -122,7 +145,7 @@ export class TextBox extends React.Component<TextBoxProps, TextBoxState>{
             this.state.value.length < (opts.charsToTrigger || 3))       // Enough chars to start searching
         {
             this.triggeredWhileLoading = false;
-            this.setState({loadingSuggestions: false, suggestions: undefined});
+            this.setState({loadingSuggestions: false, suggestions: undefined, selectedSuggestion: undefined});
             return;
         }
 
@@ -135,7 +158,7 @@ export class TextBox extends React.Component<TextBoxProps, TextBoxState>{
 
         const pieces = await opts.getSuggestions(this.state.value);
 
-        setTimeout(() => {this.setState({suggestions: pieces, loadingSuggestions: false});
+        setTimeout(() => {this.setState({suggestions: pieces, loadingSuggestions: false, selectedSuggestion: undefined});
             if(this.triggeredWhileLoading) {
                 this.triggeredWhileLoading = false;
                 setTimeout(() => this.loadSuggestions());
@@ -177,7 +200,11 @@ export class TextBox extends React.Component<TextBoxProps, TextBoxState>{
                 (sug, index) => {
                     return sug.separator === true ?
                         <Separator key={sug.key}/> :
-                        <Clickable isSelected={this.state.selectedSuggestion === index} {...sug} />
+                        <Clickable
+                            {...sug}
+                            isSelected={this.state.selectedSuggestion === index}
+                            onClick={() => this.activateSuggestion(sug)}
+                        />
                 }
             );
             const loader = <Loader text={`Loading`}/>;
@@ -210,22 +237,45 @@ export class TextBox extends React.Component<TextBoxProps, TextBoxState>{
     }
 
     selectNextSuggestion(){
+        const suggestions = this.state.suggestions;
+
+        if(!suggestions) {
+            return;
+        }
+
         const current = typeof this.state.selectedSuggestion === 'number' ? this.state.selectedSuggestion : -1;
         let next = current + 1;
 
-        if(next) {
-            // Is separator: jump one
+        if( suggestions[next] && suggestions[next].separator ) {
+            next++;
         }
 
-        if(next) {
-            // is overflow, restrict to last one
+        if(next >= suggestions.length) {
+            next = suggestions.length - 1;
         }
 
-        console.log(`Next: ${next}`);
         this.setState({selectedSuggestion: next});
     }
 
     selectPreviousSuggestion(){
+        const suggestions = this.state.suggestions;
+
+        if(!suggestions) {
+            return;
+        }
+
+        const current = typeof this.state.selectedSuggestion === 'number' ? this.state.selectedSuggestion : suggestions.length;
+        let prev = current - 1;
+
+        if( suggestions[prev] && suggestions[prev].separator) {
+            prev--;
+        }
+
+        if(prev < 0) {
+            prev = 0;
+        }
+
+        this.setState({selectedSuggestion: prev});
 
     }
 }
