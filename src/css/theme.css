@@ -28,3 +28,7 @@
 .ui-separator:after{
     background-color: WindowFrame;
 }
+.ui-item-group{
+    border: solid 1px #ddd;
+    border-radius: 0.5em;
+}

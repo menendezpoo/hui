@@ -1,15 +1,16 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-import {Panel} from "./components/Panel";
 import './css/styles.css';
 import './css/theme.css';
 import './css/index.scss';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import {Panel} from "./components/Panel";
 import {Button} from "./components/items/Button";
 import {Clickable} from "./components/items/Clickable";
 import {Label} from "./components/items/Label";
 import {MenuItem} from "./components/items/MenuItem";
 import {TextBox} from "./components/items/TextBox";
 import {Separator} from "./components/items/Separator";
+import {ItemGroup} from "./components/items/ItemGroup";
 
 async function  withLatency<T>(r: T){
     return new Promise<T>(resolve => setTimeout(()=>resolve(r), 2000*Math.random()));
@@ -17,6 +18,20 @@ async function  withLatency<T>(r: T){
 
 ReactDOM.render(
     <Panel>
+        <ItemGroup>
+            <Button text={`Button A`}/>
+            <Button text={`Button B`}/>
+            <Button text={`Button C`}/>
+        </ItemGroup>
+        <Separator />
+        <TextBox
+            placeholder={`I have custom suggestions`}
+            clearButton={true}
+            suggestions={async t => withLatency(
+                "Hello World, This is me"
+                    .split(",")
+                    .map(a => ({key: a, text: t + ' - ' + a})))}
+        />
         <TextBox placeholder={`I have suggestions`} clearButton={true} suggestions={async t => {
             console.log(`searching ${t}`);
             return withLatency([
