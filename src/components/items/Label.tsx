@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Icon, IconName, IconSize} from "./Icon";
 
-export interface LabelProps {
+export interface LabelProps{
     text?: string;
     icon?: IconName;
     iconSize?: IconSize;

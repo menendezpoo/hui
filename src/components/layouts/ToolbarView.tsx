@@ -21,9 +21,9 @@ export class ToolbarView extends React.Component<ToolbarViewProps>{
             <DockView
                 {...this.props}
                 length={len}
-                classNames={`ui-toolbar-view`}
+                classNames={`ui-toolbar-view ${this.props.classNames || ''}`}
                 side={side}
-                sideClassNames={`toolbar`}
+                sideClassNames={`toolbar ${this.props.sideClassNames || ''}`}
                 sideView={<>
                     <div className="items near">{this.props.items}</div>
                     <div className="items center">{this.props.itemsCenter}</div>

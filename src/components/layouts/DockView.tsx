@@ -42,8 +42,8 @@ export class DockView extends React.Component<DockViewProps>{
 
         return (
             <div className={`ui-dock-view side-${side} ${this.props.classNames}`}>
-                <div className={`dock-side ${this.props.sideClassNames}`} style={sideCss}>{this.props.sideView}</div>
-                <div className={`main-side ${this.props.containerClassNames}`} style={mainCss}>{this.props.children}</div>
+                <div className={`dock-side ${this.props.sideClassNames || ''}`} style={sideCss}>{this.props.sideView}</div>
+                <div className={`main-side ${this.props.containerClassNames || ''}`} style={mainCss}>{this.props.children}</div>
             </div>
         );
 
