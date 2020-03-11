@@ -5,7 +5,6 @@ import {RefObject} from "react";
 import {Rectangle} from "../../helpers/Rectangle";
 import {Callable} from "../../declarations";
 import {KeyCaptureStackHandler} from "../../handlers/KeyCaptureStackHandler";
-import {instanceOf} from "prop-types";
 import {Separator} from "../items/Separator";
 
 export interface MenuOverlayProps extends OverlayProps{
@@ -136,7 +135,7 @@ export class MenuOverlay extends React.Component<MenuOverlayProps, MenuOverlaySt
         let newRectangle = rect.clone();
 
         if(rect.right > view.width) {
-            newRectangle = newRectangle.withRight(refRect.left);
+            newRectangle = newRectangle.withRight(refRect.right);
         }
 
         if(rect.bottom > view.height) {

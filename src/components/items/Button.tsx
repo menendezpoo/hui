@@ -16,6 +16,7 @@ export interface ButtonProps extends ClickableProps{
     face?: "hover" | "always" | "never";
     classTag?: string;
     disabled?: boolean;
+    selected?: boolean;
 }
 
 export interface ButtonState {
@@ -109,7 +110,8 @@ export class Button extends React.Component<ButtonProps, ButtonState>{
         const tags = [
                 `face-${this.props.face || 'hover'}`,
                  this.props.classTag,
-                 this.props.disabled ? 'disabled' : null
+                 this.props.disabled ? 'disabled' : null,
+                 this.props.selected ? 'selected' : null,
             ]
             .filter(a => !!a)
             .join(` `);

@@ -25,10 +25,17 @@
     border: solid 1px #ddd;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
 }
+
 .ui-separator:after{
-    background-color: WindowFrame;
+    background-color: rgba(0, 0, 0, 0.13);
 }
 .ui-item-group{
     border: solid 1px #ddd;
     border-radius: 0.5em;
 }
+
+.ui-item-group > .ui-clickable.selected:not(.disabled){
+    background-color: #ddd;
+}
+
+.ui-split-view > .dock-side{ border-color: #ddd;  }

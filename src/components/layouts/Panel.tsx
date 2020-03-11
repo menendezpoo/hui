@@ -7,5 +7,13 @@ export interface PanelProps {
 }
 
 export const Panel: FunctionComponent<PanelProps> = (props: PanelProps) => {
-    return <div className="ui-panel">{props.children}</div>
+    return (
+        <div className="ui-panel"
+             style={{
+                 overflow: "auto"
+             }}
+        >
+            {props.children}
+        </div>
+    );
 };
