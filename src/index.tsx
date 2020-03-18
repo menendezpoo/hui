@@ -14,13 +14,43 @@ import {ToolbarView} from "./components/layouts/ToolbarView";
 import {Panel} from "./components/layouts/Panel";
 import {SplitView} from "./components/layouts/SplitView";
 import {TabView} from "./components/layouts/TabView";
+import {TreeView} from "./components/layouts/TreeView";
+import {TreeItem} from "./components/items/TreeItem";
 
 async function  withLatency<T>(r: T){
     return new Promise<T>(resolve => setTimeout(()=>resolve(r), 2000*Math.random()));
 }
 
+function _id(): string{
+    return String(Math.round(Math.random() * 100000))  + '-' + String(Math.round(Math.random() * 1000000));
+}
+
 ReactDOM.render(
-    <SplitView sideView={<div>side</div>}>
+    <SplitView sideView={(
+        <TreeView>
+            <TreeItem itemKey={_id()} icon={`file`} text={`Hello`}>
+                <TreeItem itemKey={_id()} text={`Surprise item!`}/>
+                <TreeItem itemKey={_id()} text={`Surprise item 2!`}/>
+                <TreeItem itemKey={_id()} text={`Surprise item 3!`}>
+                    <TreeItem itemKey={_id()} text={`With more!`}/>
+                    <TreeItem itemKey={_id()} text={`And more!`} icon={`folder`}>
+                        <TreeItem itemKey={_id()} text={`And a third level!`}/>
+                    </TreeItem>
+                </TreeItem>
+            </TreeItem>
+            <TreeItem itemKey={_id()} text={`World`}>
+                <TreeItem itemKey={_id()} text={`Some other item`} />
+                <TreeItem itemKey={_id()} text={`Some other item as well`} />
+                <TreeItem itemKey={_id()} text={`Some other item as well here`} />
+            </TreeItem>
+            <TreeItem itemKey={_id()} text={`Articles`}>
+                <TreeItem itemKey={_id()} text={`Blog Posts`} />
+                <TreeItem itemKey={_id()} text={`Catalog`} />
+                <TreeItem itemKey={_id()} text={`Contact Us`} />
+            </TreeItem>
+            <TreeItem itemKey={_id()} text={`Im a single node`}/>
+        </TreeView>
+    )}>
         <TabView
             tabs={[
                 {key: `a`, text: `Hello`},

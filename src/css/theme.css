@@ -43,3 +43,17 @@
 .ui-tab-view > .tabs { background-color: #ddd;}
 .ui-tab-view > .tabs  > .items > .tab {margin-top: 0.6em;}
 .ui-tab-view > .tabs  > .items > .selected{ background-color: white; }
+
+.ui-tree-view:focus .ui-tree-item.selected{
+    background-color: Highlight;
+    color: HighlightText;
+}
+
+.ui-tree-item.selected{
+    background-color: #f0f0f0;
+    color: HighlightText;
+}
+
+.ui-tree-item:not(.selected):hover{
+    background-color: #E3EFFE;
+}

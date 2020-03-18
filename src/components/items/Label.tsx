@@ -39,6 +39,6 @@ export const Label = (props: LabelProps) => {
             </div>
         }
     }else{
-        throw "Undesired state";
+        throw "Undesired configuration";
     }
 };
