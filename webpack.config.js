@@ -9,6 +9,10 @@ module.exports = {
         extensions: [".ts", ".tsx"]
     },
 
+    output:{
+        libraryTarget: "commonjs2"
+    },
+
     module: {
         rules: [
             {
