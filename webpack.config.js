@@ -9,6 +9,8 @@ module.exports = {
         extensions: [".ts", ".tsx"]
     },
 
+    entry: './src/index.tsx',
+
     output:{
         libraryTarget: "commonjs2"
     },
